@@ -1,0 +1,4 @@
+
+class LibraryController {
+  const LibraryController();
+}
