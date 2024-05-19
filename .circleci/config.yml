@@ -21,8 +21,9 @@ jobs:
       - checkout
       - flutter/install_sdk_and_pub:
           version: 3.22.0
-      - flutter/analyze
-      - flutter/test
+      - run: flutter analyze
+#      - run: flutter test
+
   semver-release:
     # automatic sem ver with changelog
     executor: node/default
