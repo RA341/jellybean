@@ -1,0 +1,85 @@
+version: 2.1
+
+orbs:
+  flutter: circleci/flutter@2.0.4
+  win: circleci/windows@5.0
+  node: circleci/node@5.0.0 # for sem ver
+
+executors:
+  linux:
+    docker:
+      - image: cimg/base:stable
+    resource_class: medium
+  macos:
+    macos:
+      xcode: 12.5.1
+
+jobs:
+  analyze_and_test:
+    executor: linux
+    steps:
+      - checkout
+      - flutter/install_sdk_and_pub:
+          version: 3.22.0
+#      - run: flutter analyze todo analyze still tanks even with --no-fatal-infos --no-fatal-warnings
+#      - run: flutter test
+
+  semver-release:
+    # automatic sem ver with changelog
+    executor: node/default
+    steps:
+      - checkout
+      - run: npm install @semantic-release/git @semantic-release/changelog -D
+      - node/install-packages # Install and automatically cache packages
+      - run: npx semantic-release
+
+  build_linux_android:
+    executor: linux
+    steps:
+      - checkout
+      - flutter/install_sdk_and_pub:
+          version: 3.22.0
+      - run: flutter build apk --release # android
+      - run: flutter build  # TODO linux
+
+  build_windows:
+    executor: win/default
+    steps:
+      - checkout
+      - flutter/install_sdk_and_pub:
+          version: 3.22.0
+      - run: dart run msix:create
+
+
+#  build_macos:
+#    executor: macos
+#    steps:
+#      - checkout
+#      - flutter/install:
+#          channel: stable
+#          version: 2.5.3
+#      - flutter/build:
+#          target: lib/main.dart
+
+workflows:
+  build:
+    jobs:
+      - analyze_and_test:
+          filters:
+            branches:
+              only: [ "main", "beta", "dev" ]
+      - semver-release:
+          filters:
+            branches:
+              only: [ "main", "beta" ]
+          requires:
+            - analyze_and_test
+#      - build_linux_android:
+#          requires:
+#            - analyze_and_test
+#      - build_windows:
+#          requires:
+#            - analyze_and_test
+#      - build_macos:
+#          requires:
+#            - analyze_and_test

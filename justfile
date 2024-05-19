@@ -30,8 +30,13 @@ bdocker:
     cd web
     docker build -t jellybean-web .
 # build app for the specified platform
-build arg:
+build +arg:
+    just get
     puro flutter build {{arg}}
+# package windows using msix
+winb:
+    just get
+    puro dart run msix:create
 
 # flutter upgarde for puro
 fup:
