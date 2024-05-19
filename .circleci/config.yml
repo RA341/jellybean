@@ -46,7 +46,7 @@ jobs:
     steps:
       - checkout
       - flutter/install_sdk_and_pub:
-          version: 3.22.0
+          version: "3.22.0"
       - run: dart run msix:create
 
 
