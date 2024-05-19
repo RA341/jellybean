@@ -20,7 +20,7 @@ jobs:
     steps:
       - checkout
       - flutter/install_sdk_and_pub:
-          version: 3.22
+          flutter_version: 3.22.0
       - flutter/analyze
       - flutter/test
   semver-release:
@@ -37,7 +37,7 @@ jobs:
     steps:
       - checkout
       - flutter/install_sdk_and_pub:
-          version: 3.22
+          flutter_version: 3.22
       - run: flutter build apk --release # android
       - run: flutter build  # TODO linux
 
@@ -46,7 +46,7 @@ jobs:
     steps:
       - checkout
       - flutter/install_sdk_and_pub:
-          version: "3.22.0"
+          version: 3.22.0
       - run: dart run msix:create
 
 
