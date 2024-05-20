@@ -33,7 +33,7 @@ jobs:
       - run: npm install @semantic-release/git @semantic-release/changelog -D
       - node/install-packages # Install and automatically cache packages
       - run: npx semantic-release
-      - run: node .\scripts\update_pubspec_verison.js # change pubspec version
+      - run: node ./scripts/update_pubspec_version.js # change pubspec version
 
   build_android:
     executor:
