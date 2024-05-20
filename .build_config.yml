@@ -1,0 +1,11 @@
+global:
+  display_name: Jellybean
+  publisher_display_name: Dumbapps
+  identity_name: app.dumb.jellybean
+
+
+main:
+  # config for main app release
+
+dev:
+  # config for beta app release

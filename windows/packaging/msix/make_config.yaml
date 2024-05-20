@@ -1,0 +1,4 @@
+display_name: "Jellybean"
+publisher_display_name: Dumbapps
+identity_name: app.dumb.jellybean
+capabilities: internetClient

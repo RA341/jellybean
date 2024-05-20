@@ -10,6 +10,9 @@
 .svn/
 migrate_working_dir/
 
+# final build files by flutter_distirbute
+dist/
+
 # IntelliJ related
 *.iml
 *.ipr
