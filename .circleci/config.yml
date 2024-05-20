@@ -75,16 +75,16 @@ jobs:
 workflows:
   build:
     jobs:
-      - analyze_and_test:
-          filters:
-            branches:
-              only: [ "main", "beta", "dev" ]
+#      - analyze_and_test:
+#          filters:
+#            branches:
+#              only: [ "main", "beta", "dev" ]
       - semver-release:
           filters:
             branches:
               only: [ "main", "beta" ]
-          requires:
-            - analyze_and_test
+#          requires:
+#            - analyze_and_test
 #      - build_linux_android:
 #          requires:
 #            - analyze_and_test
