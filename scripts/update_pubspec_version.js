@@ -1,6 +1,16 @@
 const {execSync} = require('child_process');
 const fs = require('fs');
 
+const gitCommand = (command) => {
+    try {
+        execSync(`git ${command}`, { stdio: 'inherit' });
+    } catch (error) {
+        console.error(`Git command "${command}" failed with error:`);
+        console.error(error);
+        process.exit(1);
+    }
+};
+
 try {
     // Get the current branch name
     const branch = execSync('git rev-parse --abbrev-ref HEAD', {encoding: 'utf8'}).trim();
@@ -22,6 +32,15 @@ try {
         fs.writeFileSync(filePath, updatedContents);
 
         console.log(`Version ${version} added to ${filePath}`);
+
+        // Add the pubspec.yaml file to the Git staging area
+        gitCommand('add pubspec.yaml');
+        // Commit the changes with a message
+        gitCommand('commit -m "chore: Update pubspec.yaml"');
+        // Push the changes to the remote repository
+        gitCommand('push');
+
+        console.log('Successfully pushed the changes to the remote repository.');
     } else {
         console.log(`No version tag found for the current branch (${branch})`);
     }
