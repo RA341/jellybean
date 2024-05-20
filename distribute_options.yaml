@@ -1,0 +1,73 @@
+output: dist/
+
+env1:
+  define: &prod prod
+env2:
+  define: &beta beta
+
+releases:
+  - name: *prod
+    jobs:
+      - name: windows
+        package:
+          platform: windows
+          target: msix
+          build_args:
+            dart-define:
+              APP_ENV: *prod
+
+      - name: android
+        package:
+          platform: android
+          target: apk
+          build_args:
+            target-platform: android-arm,android-arm64
+            dart-define:
+              APP_ENV: *prod
+
+      - name: linux-deb
+        package:
+          platform: linux
+          target: deb
+
+      - name: linux-rpm
+        package:
+          platform: linux
+          target: rpm
+
+      - name: ios
+        package:
+          platform: ios
+          target: ipa
+          build_args:
+            export-options-plist: ios/dev_ExportOptions.plist
+            dart-define:
+              APP_ENV: *prod
+
+  - name: beta
+    jobs:
+      - name: windows
+        package:
+          platform: windows
+          target: msix
+          build_args:
+            dart-define:
+              APP_ENV: *beta
+
+      - name: android
+        package:
+          platform: android
+          target: apk
+          build_args:
+            target-platform: android-arm,android-arm64
+            dart-define:
+              APP_ENV: *beta
+
+      - name: ios
+        package:
+          platform: ios
+          target: ipa
+          build_args:
+            export-options-plist: ios/dev_ExportOptions.plist
+            dart-define:
+              APP_ENV: *beta

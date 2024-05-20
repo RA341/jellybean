@@ -5,10 +5,10 @@
 
 #### Ci
 * setup CI/CD
-  * Figure how to do sem ver 
-    * possible github actions using sem ver github action
+  * ~Figure how to do sem ver~ 
+    * ~possible github actions using sem ver github action~
   * figure out circle ci builds 
-    * wire up the config for circle ci
+    * ~wire up the config for circle ci~
     * figure out the package format for each platform
     * lib to use https://distributor.leanflutter.dev/
       * android - apk

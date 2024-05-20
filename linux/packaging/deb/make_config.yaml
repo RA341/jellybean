@@ -1,0 +1,28 @@
+display_name: Jellybean
+package_name: jellybean
+maintainer:
+  name: ra341
+  email: exa@mple.com
+
+priority: optional
+section: x11
+essential: false
+
+#postinstall_scripts:
+#  - echo "Installed my awesome app"
+#postuninstall_scripts:
+#  - echo "Surprised Pickachu face"
+
+keywords:
+  - Jellyfin
+  - media
+  - streaming
+  - Application
+
+generic_name: Media Streaming
+
+categories:
+  - Music
+  - Media
+
+startup_notify: false

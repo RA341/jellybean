@@ -4,15 +4,16 @@ orbs:
   flutter: circleci/flutter@2.0.4
   win: circleci/windows@5.0
   node: circleci/node@5.0.0 # for sem ver
+  android: circleci/android@1.0.3
 
 executors:
   linux:
     docker:
       - image: cimg/base:stable
     resource_class: medium
-  macos:
-    macos:
-      xcode: 12.5.1
+#  macos: todo
+#    macos:
+#      xcode: 12.5.1
 
 jobs:
   analyze_and_test:
@@ -21,8 +22,8 @@ jobs:
       - checkout
       - flutter/install_sdk_and_pub:
           version: 3.22.0
-#      - run: flutter analyze todo analyze still tanks even with --no-fatal-infos --no-fatal-warnings
-#      - run: flutter test
+  #      - run: flutter analyze todo analyze still tanks even with --no-fatal-infos --no-fatal-warnings
+  #      - run: flutter test
 
   semver-release:
     # automatic sem ver with changelog
@@ -32,9 +33,21 @@ jobs:
       - run: npm install @semantic-release/git @semantic-release/changelog -D
       - node/install-packages # Install and automatically cache packages
       - run: npx semantic-release
+      - run: node .\scripts\update_pubspec_verison.js # change pubspec version
 
-  build_linux_android:
+  build_android:
+    executor:
+      name: android/android-machine
+    steps:
+      - flutter/install_sdk_and_pub:
+          version: 3.22.0
+      - flutter/install_android_gradle_dependencies
+      - flutter/install_android_gem
+      - run: dart pub global activate flutter_distributor
+
+  build_linux:
     executor: linux
+    # todo
     steps:
       - checkout
       - flutter/install_sdk_and_pub:
@@ -44,22 +57,20 @@ jobs:
 
   build_windows:
     executor: win/default
+    # todo
     steps:
       - checkout
       - flutter/install_sdk_and_pub:
           version: 3.22.0
       - run: dart run msix:create
 
-
-#  build_macos:
-#    executor: macos
-#    steps:
-#      - checkout
-#      - flutter/install:
-#          channel: stable
-#          version: 2.5.3
-#      - flutter/build:
-#          target: lib/main.dart
+  build_macos:
+    executor: macos
+    # todo
+    steps:
+      - checkout
+      - flutter/install_sdk_and_pub:
+          version: 3.22.0
 
 workflows:
   build:
