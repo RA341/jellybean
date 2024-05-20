@@ -3,11 +3,12 @@ const fs = require('fs');
 
 const gitCommand = (command) => {
     try {
-        execSync(`git ${command}`, { stdio: 'inherit' });
+        return execSync(`git ${command}`, {stdio: 'inherit'});
     } catch (error) {
         console.error(`Git command "${command}" failed with error:`);
         console.error(error);
         process.exit(1);
+        return null
     }
 };
 
@@ -33,18 +34,26 @@ try {
 
         console.log(`Version ${version} added to ${filePath}`);
 
+        const accessToken = process.env.GITHUB_TOKEN
+        console.log(`access token ${accessToken ? 'found' : 'not found'}`);
+
+        const remoteUrl = gitCommand('config --get remote.origin.url');
+        console.log(`Remote URL: ${remoteUrl}`);
+
         // Add the pubspec.yaml file to the Git staging area
         gitCommand('add pubspec.yaml');
         // Commit the changes with a message
-        gitCommand('commit -m "chore: Update pubspec.yaml"');
+        gitCommand('commit -m "chore: Update pubspec.yaml version"');
         // Push the changes to the remote repository
-        gitCommand('push');
+        gitCommand('config user.name "Release-bot"');
+        gitCommand('config user.email "release@bot.com"');
+        gitCommand(`push https://${accessToken}@${remoteUrl.subarray(remoteUrl.indexOf(':') + 3)}`);
 
         console.log('Successfully pushed the changes to the remote repository.');
     } else {
         console.log(`No version tag found for the current branch (${branch})`);
     }
 } catch (e) {
-    console.log(`Command failed, make sure ${branch} has tags`);
+    console.log(`Command failed`);
     console.log(e)
 }
