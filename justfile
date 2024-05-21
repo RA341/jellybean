@@ -10,14 +10,14 @@ mkpage +args:
     py scripts/make_page.py {{args}}
 # run flutter clean
 clean:
-    puro flutter clean build
+    puro flutter clean
 # flutter pub get
 get:
     puro flutter pub get
 # run flutter clean then pub get
 clean-get:
     just clean
-    just pget
+    just get
 # flutter pub upgrade --major-versions
 up-major:
     puro flutter pub upgrade --major-versions

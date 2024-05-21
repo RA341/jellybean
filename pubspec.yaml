@@ -6,7 +6,7 @@ publish_to: 'none'
 version: 0.1.0+1
 
 environment:
-  sdk: '>=3.4.0-190.1.beta <4.0.0'
+  sdk: '>=3.4.0 <4.0.0'
 
 # To automatically upgrade your package dependencies to the latest versions
 # flutter pub upgrade --major-versions
@@ -40,12 +40,16 @@ dependencies:
   cached_network_image: ^3.3.1
   flutter_animate: ^4.5.0
 
+  # player
+  media_kit: ^1.1.10+1 # Primary package.
+  media_kit_video: ^1.2.4 # For video rendering.
+  media_kit_libs_video: ^1.0.4 # Native video dependencies.
+
   # jellyfin sdk
   jellydart:
     git:
       url: https://github.com/RA341/jellydart.git
       ref: main
-      path: jellydart
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

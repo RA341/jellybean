@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:jellybean/core/home/home.providers.dart';
 
 import 'package:jellybean/providers/jellyfin_auth.provider.dart';
 import 'package:jellybean/utils/assets.dart';
 import 'package:jellybean/utils/setup.dart';
-import 'package:jellydart/api.dart';
+import 'package:jellydart/jellydart.dart';
 
 class ResumeWatchingRow extends StatelessWidget {
   const ResumeWatchingRow({
@@ -41,16 +42,25 @@ class ResumeWatchingItem extends ConsumerWidget {
 
   final BaseItemDto item;
 
+  String getVideo(VideosApi client) {
+    logDebug('String serrhc');
+    client.getVideoStream(item.id!).then(
+      (value) {
+        logInfo(value?.contentType);
+      },
+    );
+
+    return '';
+  }
+
   Future<Widget> getImage(ApiClient client) async {
     final imageAPI = ImageApi(client);
     try {
-      // final fg = await imageAPI.getItemImage(item.id!,);
-      // if (fg == null || fg.isEmpty) {
-      //   // TODO show default image
-      //   return const Icon(Icons.error);
-      // }
-
-
+      final fg = await imageAPI.getItemImage(item.id!, ImageType.primary);
+      if (fg == null) {
+        // TODO show default image
+        return const Icon(Icons.error);
+      }
     } catch (e) {
       logError('Could not find image', error: e);
     }
@@ -60,9 +70,14 @@ class ResumeWatchingItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final client = ref.watch(apiClientProvider);
+    final client = ref.watch(videoApi);
+    if (client == null) return const CircularProgressIndicator();
 
-    if (client != null) getImage(client);
+    logDebug('Passed circluar progeress');
+
+    getVideo(client);
+
+    // final images = getImage(client);
 
     return SizedBox(
       width: 100,
@@ -74,7 +89,8 @@ class ResumeWatchingItem extends ConsumerWidget {
             width: 50,
             height: 100,
             child: CachedNetworkImage(
-              imageUrl: 'https://letsenhance.io/static/73136da51c245e80edc6ccfe44888a99/1015f/MainBefore.jpg',
+              imageUrl:
+                  'https://letsenhance.io/static/73136da51c245e80edc6ccfe44888a99/1015f/MainBefore.jpg',
               progressIndicatorBuilder: (context, url, downloadProgress) =>
                   CircularProgressIndicator(value: downloadProgress.progress),
               errorWidget: (context, url, error) => Image.asset(

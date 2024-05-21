@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:jellydart/api.dart';
+import 'package:jellydart/jellydart.dart';
 
 class PublicUsersList extends StatelessWidget {
   const PublicUsersList({required this.users, super.key});

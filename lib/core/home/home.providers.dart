@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jellybean/providers/jellyfin_auth.provider.dart';
 import 'package:jellybean/utils/setup.dart';
-import 'package:jellydart/api.dart';
+import 'package:jellydart/jellydart.dart';
 
 final latestAndRecommendedProvider = Provider<List<String>>((ref) {
   return [''];
@@ -26,3 +26,9 @@ final continueWatchingProvider =
   return itemsApi;
 });
 
+final videoApi = Provider<VideosApi?>((ref) {
+  final client = ref.watch(apiClientProvider);
+  if (client == null) return null;
+
+  return VideosApi(client);
+});

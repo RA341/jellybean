@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jellybean/services/jellyfin_auth.dart';
 
 import 'package:jellybean/utils/setup.dart';
-import 'package:jellydart/api.dart';
+import 'package:jellydart/jellydart.dart';
 import 'package:jellydart/auth_with_metadata.dart';
 
 /// rotates host list of the default server to fina the active url

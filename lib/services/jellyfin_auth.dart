@@ -4,7 +4,7 @@ import 'package:jellybean/models/auth.model.dart';
 
 import 'package:jellybean/utils/setup.dart';
 import 'package:jellybean/utils/utils.dart';
-import 'package:jellydart/api.dart';
+import 'package:jellydart/jellydart.dart';
 import 'package:jellydart/auth_with_metadata.dart';
 
 Future<String?> testConnection(String host) async {
