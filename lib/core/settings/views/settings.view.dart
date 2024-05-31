@@ -9,8 +9,6 @@ class SettingsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO
-    return const Text('Settings!!!!');
     return const LayoutSwitcher(
       mobileLayout: SettingsMobileView(),
       desktopLayout: SettingsDesktopView(),

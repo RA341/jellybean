@@ -525,7 +525,7 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: "3c55d5cd45de06138215bf87933371e8e8b30984"
+      resolved-ref: "12bc232496ce27a29f87e3274c6ab19303e30487"
       url: "https://github.com/RA341/jellydart.git"
     source: git
     version: "0.0.1"
@@ -534,7 +534,7 @@ packages:
     description:
       path: "jellyfin_openapi\\jellyfin_oapi"
       ref: main
-      resolved-ref: "3c55d5cd45de06138215bf87933371e8e8b30984"
+      resolved-ref: "12bc232496ce27a29f87e3274c6ab19303e30487"
       url: "https://github.com/RA341/jellydart.git"
     source: git
     version: "1.0.0"

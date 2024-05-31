@@ -18,37 +18,11 @@ class HomeDesktopView extends ConsumerWidget {
     return const SingleChildScrollView(
       child: Column(
         children: [
-          ActionBar(),
           LatestAndRecommendedMediaCarousal(),
           ResumeWatching(),
           LatestMediaCollections(),
         ],
       ),
-    );
-  }
-}
-
-class ActionBar extends ConsumerWidget {
-  const ActionBar({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Row(
-      children: [
-        ElevatedButton(
-          onPressed: () => ref.refresh(continueWatchingProvider.future),
-          child: const Text('Refresh'),
-        ),
-        const Padding(padding: EdgeInsets.symmetric(horizontal: 30)),
-        ElevatedButton(
-          onPressed: () async {
-            await settings.logout();
-            if (!context.mounted) return;
-            context.goNamed(homeRouteName);
-          },
-          child: const Text('Reset db'),
-        ),
-      ],
     );
   }
 }

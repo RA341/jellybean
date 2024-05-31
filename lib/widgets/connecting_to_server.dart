@@ -13,16 +13,35 @@ class ConnectingToServer extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final apiVal = ref.watch(serverHostProvider);
+    final currentUser = ref.watch(currentUserProvider);
     return Scaffold(
       body: handleAsyncValue(
         apiVal,
         (data) {
-          if (data == null) context.go(authRoute);
           // if host is null implies default server was not found
-          Future(
-            () {
-              logDebug('Api provider is found');
-              context.go(homeRoute);
+          if (data == null) context.go(authRoute);
+          logDebug('Api provider is ready');
+
+          currentUser.when(
+            loading: () {
+              logDebug('Fetching current user...');
+              return const CircularProgressIndicator();
+            },
+            error: (error, stackTrace) {
+              Future(
+                () => context.go(
+                  errorRoute,
+                  extra: 'Failed to get current user info',
+                ),
+              );
+              const Text('Could not connect to server !!');
+            },
+            data: (data) {
+              Future(
+                () {
+                  context.go(homeRoute);
+                },
+              );
             },
           );
           return const Text('Server found redirecting...');
@@ -34,7 +53,7 @@ class ConnectingToServer extends ConsumerWidget {
               extra: 'Failed to make connection with server',
             ),
           );
-          return const Text('Could connect to server !!');
+          return const Text('Could not connect to server !!');
         },
       ),
     );

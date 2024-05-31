@@ -11,6 +11,9 @@ const settingsRoute = '/$settingsRouteName';
 const authRouteName = 'auth';
 const authRoute = '/$authRouteName';
 
+const playerRouteName = 'player';
+const playerRoute = '/$playerRouteName';
+
 const loadingRouteName = 'loading';
 const loadingRoute = '/$loadingRouteName';
 

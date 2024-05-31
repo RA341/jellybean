@@ -5,7 +5,7 @@ import 'package:jellybean/utils/setup.dart';
 import 'package:jellydart/jellydart.dart';
 import 'package:jellydart/auth_with_metadata.dart';
 
-/// rotates host list of the default server to fina the active url
+/// rotates host list of the default server to final the active url
 final serverHostProvider = FutureProvider<String?>((ref) async {
   final server = settings.getDefaultServer();
   if (server == null) {
@@ -44,5 +44,7 @@ final currentUserProvider = FutureProvider<UserDto?>((ref) async {
   if (apiClient == null) {
     return null;
   }
+
   return UserApi(apiClient).getCurrentUser();
 });
+

@@ -26,9 +26,8 @@ final continueWatchingProvider =
   return itemsApi;
 });
 
-final videoApi = Provider<VideosApi?>((ref) {
-  final client = ref.watch(apiClientProvider);
+final getUrlApiProvider = Provider<GetUrlApi?>((ref) {
+  final client = ref.read(apiClientProvider);
   if (client == null) return null;
-
-  return VideosApi(client);
+  return GetUrlApi(client: client);
 });

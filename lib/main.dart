@@ -5,9 +5,11 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jellybean/navigation/router.dart';
 import 'package:jellybean/utils/setup.dart';
+import 'package:media_kit/media_kit.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  MediaKit.ensureInitialized();
   await setUpAppSingletons();
   AppLifecycleListener(
     onExitRequested: () async {
@@ -24,7 +26,7 @@ class App extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final router = ref.watch(routerProvider);
+    final router = ref.read(routerProvider);
     return MaterialApp.router(
       routerConfig: router,
       title: 'Jellybean',
